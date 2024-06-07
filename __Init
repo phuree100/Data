@@ -14,7 +14,7 @@ async def start_pings(url, num_pings):
         tasks = []
         for i in range(num_pings):
             tasks.append(asyncio.create_task(ping_server(session, url, i)))
-            #await asyncio.sleep()  # Wait delay seconds before starting the next ping
+            await asyncio.sleep(0.001)  # Wait delay seconds before starting the next ping
 
         # Wait for all tasks to complete
         await asyncio.gather(*tasks)
