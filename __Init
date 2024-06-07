@@ -1,26 +1,17 @@
 #!/bin/bash
 
-# Update and upgrade the system
-sudo apt update && sudo apt upgrade -y
+# Update package list
+sudo apt update
 
 # Install prerequisites
 sudo apt install -y software-properties-common
 
-# Add the deadsnakes PPA (contains newer Python versions)
-sudo add-apt-repository ppa:deadsnakes/ppa
-
-# Update the package list to include the deadsnakes PPA packages
+# Add the deadsnakes PPA and update package list
+sudo add-apt-repository -y ppa:deadsnakes/ppa
 sudo apt update
 
 # Install Python 3.11
 sudo apt install -y python3.11
 
-# Optionally, install pip for Python 3.11
-sudo apt install -y python3.11-distutils
-curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python3.11
-
 # Verify the installation
 python3.11 --version
-pip3.11 --version
-
-echo "Python 3.11 installation complete."
