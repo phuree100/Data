@@ -1,10 +1,31 @@
-{
-    "username": "mrp",
-    "studentid": "0",
-    "fullname": "mrp js",
-    "name": "mrp",
-    "surname": "js",
-    "gender": "boy",
-    "password": "mrpiscool",
-    "numberonscr": "xxxxxx9274xx"
-}
+import asyncio
+import aiohttp
+import time
+
+async def ping_server(session, url, index):
+    print(f"Ping {index + 1} to {url} started at {time.time()}")
+    async with session.get(url) as response:
+        # Just to simulate doing something with the response
+        await response.text()
+        print(f"Ping {index + 1} to {url} completed at {time.time()} with status {response.status}")
+
+async def start_pings(url, num_pings, delay):
+    async with aiohttp.ClientSession() as session:
+        tasks = []
+        for i in range(num_pings):
+            tasks.append(asyncio.create_task(ping_server(session, url, i)))
+            await asyncio.sleep(delay)  # Wait delay seconds before starting the next ping
+
+        # Wait for all tasks to complete
+        await asyncio.gather(*tasks)
+
+# Define the main function to run the pings
+async def main():
+    url = 'http://bodin2.ac.th'  # Replace with your server URL
+    num_pings = 2000000
+    delay = 0.05  # 0.1 seconds delay between each ping
+
+    await start_pings(url, num_pings, delay)
+
+# Run the main function
+asyncio.run(main())
