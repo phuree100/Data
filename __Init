@@ -3,15 +3,12 @@
 # Update package list
 sudo apt update
 
-# Install prerequisites
-sudo apt install -y software-properties-common
+# Install Python 3.11 and pip for Python 3.11
+sudo apt install -y python3.11 python3.11-distutils
 
-# Add the deadsnakes PPA and update package list
-sudo add-apt-repository -y ppa:deadsnakes/ppa
-sudo apt update
-
-# Install Python 3.11
-sudo apt install -y python3.11
+# Install pip for Python 3.11
+curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python3.11
 
 # Verify the installation
 python3.11 --version
+pip3.11 --version
