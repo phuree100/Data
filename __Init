@@ -1,31 +1,26 @@
-import asyncio
-import aiohttp
-import time
+#!/bin/bash
 
-async def ping_server(session, url, index):
-    print(f"Ping {index + 1} to {url} started at {time.time()}")
-    async with session.get(url) as response:
-        # Just to simulate doing something with the response
-        await response.text()
-        print(f"Ping {index + 1} to {url} completed at {time.time()} with status {response.status}")
+# Update and upgrade the system
+sudo apt update && sudo apt upgrade -y
 
-async def start_pings(url, num_pings):
-    async with aiohttp.ClientSession() as session:
-        tasks = []
-        for i in range(num_pings):
-            tasks.append(asyncio.create_task(ping_server(session, url, i)))
-            await asyncio.sleep(0.001)  # Wait delay seconds before starting the next ping
+# Install prerequisites
+sudo apt install -y software-properties-common
 
-        # Wait for all tasks to complete
-        await asyncio.gather(*tasks)
+# Add the deadsnakes PPA (contains newer Python versions)
+sudo add-apt-repository ppa:deadsnakes/ppa
 
-# Define the main function to run the pings
-async def main():
-    url = 'http://bodin2.ac.th'  # Replace with your server URL
-    num_pings = 2000000
-    #delay = 0.05 0.1 seconds delay between each ping
+# Update the package list to include the deadsnakes PPA packages
+sudo apt update
 
-    await start_pings(url, num_pings)
+# Install Python 3.11
+sudo apt install -y python3.11
 
-# Run the main function
-asyncio.run(main())
+# Optionally, install pip for Python 3.11
+sudo apt install -y python3.11-distutils
+curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python3.11
+
+# Verify the installation
+python3.11 --version
+pip3.11 --version
+
+echo "Python 3.11 installation complete."
